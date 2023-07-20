@@ -6,7 +6,7 @@ $last_name = $_POST['last_name'];
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$check_username = $mysqli->prepare('select username from users where username=?');
+$check_username = $mysqli->prepare("SELECT * FROM users WHERE username=?");
 $check_username->bind_param('s', $username);
 $check_username->execute();
 $check_username->store_result();
@@ -14,15 +14,15 @@ $username_exists = $check_username->num_rows();
 
 if ($username_exists == 0) {
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-    $query = $mysqli->prepare('insert into users(first_name,last_name,username,password) values(?,?,?,?)');
+    $query = $mysqli->prepare("INSERT INTO users(first_name, last_name, username, password) VALUES (?,?,?,?)");
     $query->bind_param('ssss', $first_name, $last_name, $username, $hashed_password);
     $query->execute();
 
-    $response['status'] = "success";
-    $response['message'] = "another message in success";
+    $response['status'] = "Success";
+    $response['message'] = "Another message in success";
 } else {
-    $response['status'] = "failed";
-    $response['message'] = "another message in fail";
+    $response['status'] = "Failed";
+    $response['message'] = "Another message in fail";
 }
 
 echo json_encode($response);
