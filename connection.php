@@ -13,5 +13,5 @@ $db_name = "users_db";
 $sql = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
 if (!$sql) {
-    die('a connection was unsuccessful');
+    die('A connection was unsuccessful');
 }
